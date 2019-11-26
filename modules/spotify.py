@@ -11,8 +11,8 @@ class Spotify(App):
     """
     Using Spotify API to get song's preview
     """
-    def __init__(self):
-        super().__init__()
+    def __init__(self, config=None):
+        super().__init__(config)
         self.token = self.__get_token()
         self.app = spotipy.Spotify(auth=self.token)
 

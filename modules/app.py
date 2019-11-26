@@ -12,16 +12,21 @@ class App(ABC):
         self.config = None
         self._set_config(config_name)
 
+    def __load_config(self, file):
+        with open(file, 'r') as f:
+            self.config = yaml.safe_load(f)
+
     def _set_config(self, config_name: str):
         """
         Set constants from configuration file
         :param config_name: str
         :return: None
         """
-        default_file = Path.cwd() / 'config.yaml'
 
-        with open(default_file, 'r') as f:
-            self.config = yaml.safe_load(f)
+        try:
+            self.__load_config(Path.cwd() / 'config.yaml')
+        except FileNotFoundError:
+            self.__load_config(Path.cwd().parent / 'config.yaml')
 
         cf_dict = {}
         if config_name:

@@ -11,8 +11,8 @@ class Bot(App):
     """
     Simple Telegram bot
     """
-    def __init__(self):
-        super().__init__()
+    def __init__(self, config=None):
+        super().__init__(config)
         self.token = self.config['telegram_token']
         self.api_url = f'https://api.telegram.org/bot{self.token}/'
 
@@ -25,8 +25,8 @@ class Bot(App):
         data = {
             'url': self.config['webhook_url']
         }
-
-        requests.post(url, data).json()
+        # TODO: add exceptions handle_request
+        resp = requests.post(url, data).json()
 
     async def send_message(self, chat_id, text) -> web.Response:
         """

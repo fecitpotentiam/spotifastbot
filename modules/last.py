@@ -2,14 +2,13 @@ import datetime
 import logging
 import time
 from datetime import timedelta
-from typing import Tuple
+from typing import Tuple, List
 
 from aiohttp import ClientSession
 
 from .app import App
 
 YEAR = 365
-COUNT_YEARS = 2
 DAYS_DELTA = 7
 
 
@@ -17,8 +16,8 @@ class LastFM(App):
     """
     Using LastFM API to get user's statistic
     """
-    def __init__(self):
-        super().__init__()
+    def __init__(self, config=None):
+        super().__init__(config)
 
     @staticmethod
     def __get_timeframe(count_years: int = 3) -> Tuple[str, str]:
@@ -36,11 +35,11 @@ class LastFM(App):
 
         return first_date_unixtime, second_date_unixtime
 
-    async def get_user_stat(self, count_years: int) -> dict:
+    async def get_user_stat(self, count_years: int) -> List[dict]:
         """
         Get user's top weekly tracks in period
         :param count_years: time delta
-        :return: dictionary with top user's tracks
+        :return: list with top user's tracks
         """
         timeframe = self.__get_timeframe(count_years)
         url = 'http://ws.audioscrobbler.com/2.0/'
