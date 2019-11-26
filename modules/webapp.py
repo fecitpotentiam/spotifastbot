@@ -1,38 +1,48 @@
-from aiohttp import web
-from modules.app import App
-from modules.last import LastFM
-from modules.spotify import Spotify
-from modules.bot import Bot
+from aiohttp import web, web_request
+from .app import App
+from .last import LastFM
+from .spotify import Spotify
+from .bot import Bot
 
-__all__ = 'WebApp'
 
 SONGS_COUNT = 5
 
 
 class WebApp(App):
+    """
+    Web Application with one route and webhook's handler
+    """
     def __init__(self, config_name: str = None):
         super().__init__(config_name)
         self.app = web.Application()
-        self.__set_rotes()
+        self.__set_routes()
 
         self.last = LastFM()
         self.spotify = Spotify()
         self.bot = Bot()
 
-    def __set_rotes(self):
-        self.app.router.add_post('/', self.handler)
+    def __set_routes(self):
+        """
+        Add route for webhook handler
+        :return: None
+        """
+        self.app.router.add_post('/', self.handle_request)
 
-    async def handler(self, request):
+    async def handle_request(self, request: web_request.Request) -> web.Response:
+        """
+        Handler for Telegram's requests
+        :param request: request from Telegram's webhook
+        :return: web.response: 200 response to Telegram
+        """
         request_content = await request.json()
         print('\n', request_content['update_id'], request_content['message']['text'], '\n')
 
         try:
             count_years = int(request_content['message']['text'])
-        except:
+        except ValueError:
             count_years = 3
 
-        time_frame = self.last.get_timeframe(count_years)
-        user_stat = await self.last.get_user_stat(time_frame)
+        user_stat = await self.last.get_user_stat(count_years)
 
         for i, track in enumerate(user_stat[:SONGS_COUNT]):
             artist = track['artist']['#text']
