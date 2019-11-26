@@ -1,0 +1,30 @@
+spotify_username:
+spotify_client_id:
+spotify_client_secret:
+spotify_redirect_url:
+spotify_scope : >
+               user-modify-playback-state,
+               user-read-playback-state,
+               user-read-currently-playing,
+               user-top-read,
+               user-read-recently-played,
+               user-library-modify,
+               user-library-read,
+               user-follow-modify,
+               user-follow-read,
+               playlist-read-private,
+               playlist-modify-public,
+               playlist-modify-private,
+               playlist-read-collaborative,
+               user-read-private,
+               user-read-email,
+               app-remote-control,
+               streaming
+
+last_api_key:
+last_client_secret:
+last_token:
+last_username:
+
+telegram_token:
+webhook_url:
