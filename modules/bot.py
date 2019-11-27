@@ -25,8 +25,13 @@ class Bot(App):
         data = {
             'url': self.config['webhook_url']
         }
-        # TODO: add exceptions handle_request
+
         resp = requests.post(url, data).json()
+
+        if resp['ok']:
+            print('Webhook is installed')
+        else:
+            print('Webhook is not installed. Please check your settings.')
 
     async def send_message(self, chat_id, text) -> web.Response:
         """

@@ -8,3 +8,5 @@ Telegram bot for integration with user's Last.fm statistics, sends your weekly t
 
 **Launching**
 
+1. Start server with command "python entry.py --port PORT"
+2. Set webhooks with command "python set_webhook.py"
