@@ -33,7 +33,7 @@ class Bot(App):
         else:
             print('Webhook is not installed. Please check your settings.')
 
-    async def send_message(self, chat_id, text) -> web.Response:
+    async def send_message(self, chat_id: int, text: str) -> web.Response:
         """
 
         :param chat_id: user's telegram_id
