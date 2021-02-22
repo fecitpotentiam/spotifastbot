@@ -51,7 +51,7 @@ class Spotify(App):
         except IndexError or KeyError:
             return None
 
-    async def get_track_info(self, artist, title) -> Tuple[str, str] or Tuple[None, None]:
+    async def get_track_info(self, artist: str, title: str) -> Tuple[str, str] or Tuple[None, None]:
         """
         Get urls with mp3 preview and album image
         :param artist: track artist
